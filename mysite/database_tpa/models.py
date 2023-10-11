@@ -21,6 +21,7 @@ class Siswa(models.Model):
     kontak = models.CharField(max_length=30, blank=True,null=True)
     alamat = models.TextField(blank=True, null=True)
     guru = models.ForeignKey(Guru, null=True, blank=True, on_delete=models.SET_NULL)
+    siswa_pdb = models.ForeignKey(SiswaPDB, null=True, blank=True, on_delete=models.SET)
 
 
 
