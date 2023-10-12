@@ -31,11 +31,16 @@ class Guru(models.Model):
         verbose_name_plural = 'Guru'
 
 class SiswaPDB(models.Model):
+    CHOICES = (
+        ('Laki-laki', 'Laki-laki'),
+        ('Perempuan', 'Perempuan'),
+    )
     nama_lengkap = models.CharField(max_length=50, blank=True, null=True)
     nama_panggilan = models.CharField(max_length=20, blank=True, null=True)
     nama_wali = models.CharField(max_length=50, blank=True, null=True)
     kontak = models.CharField(max_length=30, blank=True, null=True)
     alamat = models.TextField(blank=True, null=True)
+    jenis_kelamin = models.CharField(max_length=20, blank=True, null=True, choices=CHOICES)
     jadwal_mengaji = models.ForeignKey(Jadwal, blank=True, null=True, on_delete=models.SET_NULL)
 
 
@@ -47,6 +52,10 @@ class SiswaPDB(models.Model):
 
 
 class Siswa(models.Model):
+    CHOICES = (
+        ('Laki-laki', 'Laki-laki'),
+        ('Perempuan', 'Perempuan'),
+    )
     nama_lengkap = models.CharField(max_length=50, blank=True,null=True)
     nama_panggilan = models.CharField(max_length=20, blank=True, null=True)
     nama_wali = models.CharField(max_length=50, blank=True,null=True)
@@ -54,6 +63,7 @@ class Siswa(models.Model):
     alamat = models.TextField(blank=True, null=True)
     guru = models.ForeignKey(Guru, null=True, blank=True, on_delete=models.SET_NULL)
     jadwal_mengaji = models.ForeignKey(Jadwal, blank=True, null=True, on_delete=models.SET_NULL)
+    jenis_kelamin = models.CharField(max_length=20, blank=True, null=True, choices=CHOICES)
     keuangan = models.ForeignKey(Keuangan, blank=True, null=True, on_delete=models.SET_NULL)
     siswa_pdb = models.ForeignKey(SiswaPDB, null=True, blank=True, on_delete=models.SET)
 
@@ -74,5 +84,6 @@ def sync_siswa_pdb(sender, instance, **kwargs):
         instance.kontak = instance.siswa_pdb.kontak
         instance.alamat = instance.siswa_pdb.alamat
         instance.jadwal_mengaji = instance.siswa_pdb.jadwal_mengaji
+        instance.jenis_kelamin = instance.siswa_pdb.jenis_kelamin
 
 pre_save.connect(sync_siswa_pdb, sender=Siswa)

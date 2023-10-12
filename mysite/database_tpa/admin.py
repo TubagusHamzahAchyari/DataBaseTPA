@@ -43,7 +43,7 @@ class SiswaAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Jadwal, JadwalAdmin)
-admin.site.register(Keuangan)
+admin.site.register(Keuangan, KeuanganAdmin)
 admin.site.register(Guru, GuruAdmin)
 admin.site.register(SiswaPDB, SiswaPDBAdmin)
 admin.site.register(Siswa, SiswaAdmin)
