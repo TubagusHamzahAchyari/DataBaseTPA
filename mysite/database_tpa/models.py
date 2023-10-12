@@ -37,6 +37,7 @@ class SiswaPDB(models.Model):
     kontak = models.CharField(max_length=30, blank=True, null=True)
     alamat = models.TextField(blank=True, null=True)
     jadwal_mengaji = models.ForeignKey(Jadwal, blank=True, null=True, on_delete=models.SET_NULL)
+    keuangan = models.ForeignKey(Keuangan, blank=True, null=True, on_delete=models.SET_NULL)
 
 
     def __str__(self):
