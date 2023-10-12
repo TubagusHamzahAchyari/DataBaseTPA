@@ -4,16 +4,28 @@ from .models import *
 class SiswaInLineJadwal(admin.TabularInline):
     model = Siswa
     extra = 0
-    fields = ('nama_lengkap', 'nama_panggilan', 'nama_wali', 'kontak', 'alamat','guru', 'jadwal_mengaji',)
+    # fields = ('nama_lengkap', 'nama_panggilan', 'nama_wali', 'kontak', 'alamat','guru', 'jadwal_mengaji',)
+    fields = ('nama_lengkap', 'nama_panggilan','guru', 'jadwal_mengaji',)
     readonly_fields = fields
 class JadwalAdmin(admin.ModelAdmin):
     list_display = ('jadwal',)
     inlines = [SiswaInLineJadwal]
 
-class SiswaInLineGuru(admin.TabularInline):
+class SiswaInLineKeuangan(admin.TabularInline):
     model = Siswa
     extra = 0
     fields = ('nama_lengkap', 'nama_panggilan', 'nama_wali', 'kontak', 'alamat','guru', 'jadwal_mengaji',)
+    readonly_fields = fields
+
+class KeuanganAdmin(admin.ModelAdmin):
+    list_display =  ('status_keuangan',)
+    inlines = [SiswaInLineKeuangan]
+
+class SiswaInLineGuru(admin.TabularInline):
+    model = Siswa
+    extra = 0
+    fields = ('nama_lengkap', 'nama_panggilan','guru', 'jadwal_mengaji',)
+    # fields = ('nama_lengkap', 'nama_panggilan', 'nama_wali', 'kontak', 'alamat', 'guru', 'jadwal_mengaji',)
     readonly_fields = fields
 
 class GuruAdmin(admin.ModelAdmin):
@@ -31,6 +43,7 @@ class SiswaAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Jadwal, JadwalAdmin)
+admin.site.register(Keuangan, KeuanganAdmin)
 admin.site.register(Guru, GuruAdmin)
 admin.site.register(SiswaPDB, SiswaPDBAdmin)
 admin.site.register(Siswa, SiswaAdmin)
