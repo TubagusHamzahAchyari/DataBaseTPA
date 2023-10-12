@@ -11,6 +11,15 @@ class Jadwal(models.Model):
     class Meta:
         verbose_name_plural = 'Jadwal'
 
+class Keuangan(models.Model):
+    status_keuangan = models.CharField(max_length=30, blank=True, null=True)
+
+    def __str__(self):
+        return self.status_keuangan
+
+    class Meta:
+        verbose_name_plural = 'Keuangan'
+
 class Guru(models.Model):
     nama_guru = models.CharField(max_length=30, blank=True, null=True)
     jadwal_mengajar = models.ForeignKey(Jadwal, blank=True, null=True, on_delete=models.SET_NULL)
@@ -28,6 +37,7 @@ class SiswaPDB(models.Model):
     kontak = models.CharField(max_length=30, blank=True, null=True)
     alamat = models.TextField(blank=True, null=True)
     jadwal_mengaji = models.ForeignKey(Jadwal, blank=True, null=True, on_delete=models.SET_NULL)
+    keuangan = models.ForeignKey(Keuangan, blank=True, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.nama_lengkap
