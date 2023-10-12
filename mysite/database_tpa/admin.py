@@ -50,3 +50,11 @@ admin.site.register(Siswa, SiswaAdmin)
 admin.site.site_header = 'Database TPA Al-Qalam'
 admin.site.site_title = 'Ahlan Wa Sahlan-Selamat Datang di Database TPA Al-Qalam'
 admin.site.index_title = 'Ahlan Wa Sahlan-Selamat Datang di Dashboard Database TPA Al-Qalam'
+
+
+from django.contrib.auth.models import User
+
+user_id_to_check = 3  # Ganti dengan ID yang sesuai
+
+if User.objects.filter(id=user_id_to_check).exists():
+    admin.site.unregister(Siswa)
