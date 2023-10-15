@@ -63,18 +63,6 @@ admin.site.site_header = 'Database TPA Al-Qalam'
 admin.site.site_title = 'Ahlan Wa Sahlan-Selamat Datang di Database TPA Al-Qalam'
 admin.site.index_title = 'Ahlan Wa Sahlan-Selamat Datang di Dashboard Database TPA Al-Qalam'
 
-# from django.contrib.auth.models import User
-#
-# user_exists = User.objects.filter(username='gurutpa').exists()
-#
-# # Set variabel gurutpa berdasarkan hasil pencarian
-# gurutpa = user_exists
-#
-# # Mendaftarkan model Siswa dengan admin yang sesuai
-# if gurutpa:
-#     admin.site.register(Siswa, SiswaAdminGuru)
-# else:
-#     admin.site.register(Siswa, SiswaAdmin)
 
 
 
