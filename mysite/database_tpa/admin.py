@@ -42,7 +42,6 @@ class SiswaAdmin(admin.ModelAdmin):
     list_display = ('nama_lengkap', 'nama_panggilan', 'nama_wali', 'kontak', 'alamat', 'guru', 'jadwal_mengaji', 'keuangan')
     raw_id_fields = ('siswa_pdb',)
     search_fields = ('nama_lengkap', 'nama_panggilan', 'nama_wali', 'kontak', 'alamat',)
-    list_display = ('nama_lengkap',)
 
     def get_list_display(self, request):
         user_exists = request.user.username == 'gurutpa'
@@ -53,31 +52,6 @@ class SiswaAdmin(admin.ModelAdmin):
         else:
             return ('nama_lengkap', 'nama_panggilan', 'nama_wali', 'kontak', 'alamat', 'guru', 'jadwal_mengaji', 'keuangan')
 
-
-
-# user_exists = request.user.username == 'gurutpa'
-#
-# # Mendaftarkan model Siswa dengan admin yang sesuai
-# if user_exists:
-#     class SiswaAdmin(admin.ModelAdmin):
-#         list_display = ('nama_lengkap', 'nama_panggilan','guru', 'jadwal_mengaji')
-#         search_fields = ('nama_lengkap', 'nama_panggilan', 'nama_wali', 'kontak', 'alamat',)
-#         list_display_links = None  # Tidak ada kolom yang dapat di-klik
-# else:
-#     class SiswaAdmin(admin.ModelAdmin):
-#         list_display = ('nama_lengkap', 'nama_panggilan', 'nama_wali', 'kontak', 'alamat','guru', 'jadwal_mengaji','keuangan')
-#         raw_id_fields = ('siswa_pdb',)
-#         search_fields = ('nama_lengkap', 'nama_panggilan', 'nama_wali', 'kontak', 'alamat',)
-
-
-# class SiswaAdmin(admin.ModelAdmin):
-#     list_display = ('nama_lengkap', 'nama_panggilan', 'nama_wali', 'kontak', 'alamat','guru', 'jadwal_mengaji','keuangan')
-#     raw_id_fields = ('siswa_pdb',)
-#     search_fields = ('nama_lengkap', 'nama_panggilan', 'nama_wali', 'kontak', 'alamat',)
-
-# class SiswaAdminGuru(admin.ModelAdmin):
-#     list_display = ('nama_lengkap', 'nama_panggilan','guru', 'jadwal_mengaji')
-#     search_fields = ('nama_lengkap', 'nama_panggilan',)
 
 
 admin.site.register(Jadwal, JadwalAdmin)
