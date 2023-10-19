@@ -1,6 +1,4 @@
 from django.db import models
-from django.db.models.signals import pre_save
-from django.dispatch import receiver
 
 class Jadwal(models.Model):
     jadwal = models.CharField(max_length=30, blank=True, null=True)
@@ -10,6 +8,9 @@ class Jadwal(models.Model):
 
     class Meta:
         verbose_name_plural = 'Jadwal'
+
+    def siswa_count(self):
+        return self.siswa_set.count()
 
 class Keuangan(models.Model):
     status_keuangan = models.CharField(max_length=30, blank=True, null=True)
@@ -29,6 +30,9 @@ class Guru(models.Model):
 
     class Meta:
         verbose_name_plural = 'Guru'
+
+    def siswa_count(self):
+        return self.siswa_set.count()
 
 class SiswaPDB(models.Model):
     CHOICES = (

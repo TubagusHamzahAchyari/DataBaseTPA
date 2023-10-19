@@ -48,7 +48,7 @@ class SiswaAdmin(admin.ModelAdmin):
 
     def babel_spp(self, obj):
         return babel.numbers.format_currency(obj.spp, 'IDR', locale='id_ID')
-    babel_spp.shortdescription = 'SPP'
+    babel_spp.short_description = 'SPP'
     def save_all_selected(modeladmin, request, queryset):
         for obj in queryset:
             obj.save()
