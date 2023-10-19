@@ -21,6 +21,9 @@ class Keuangan(models.Model):
     class Meta:
         verbose_name_plural = 'Keuangan'
 
+    def siswa_count(self):
+        return self.siswa_set.count()
+
 class Guru(models.Model):
     nama_guru = models.CharField(max_length=30, blank=True, null=True)
     jadwal_mengajar = models.ForeignKey(Jadwal, blank=True, null=True, on_delete=models.SET_NULL)

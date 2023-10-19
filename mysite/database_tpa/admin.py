@@ -10,7 +10,7 @@ class SiswaInLineJadwal(admin.TabularInline):
     fields = ('nama_lengkap', 'nama_panggilan','guru', 'jadwal_mengaji',)
     readonly_fields = fields
 class JadwalAdmin(admin.ModelAdmin):
-    list_display = ('jadwal',)
+    list_display = ('jadwal','siswa_count',)
     inlines = [SiswaInLineJadwal]
 
 class SiswaInLineKeuangan(admin.TabularInline):
@@ -31,7 +31,7 @@ class SiswaInLineGuru(admin.TabularInline):
     readonly_fields = fields
 
 class GuruAdmin(admin.ModelAdmin):
-    list_display = ('nama_guru','jadwal_mengajar',)
+    list_display = ('nama_guru','jadwal_mengajar','siswa_count',)
     inlines = [SiswaInLineJadwal]
 
 class SiswaPDBAdmin(admin.ModelAdmin):
