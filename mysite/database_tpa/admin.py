@@ -1,4 +1,3 @@
-
 from django.contrib import admin
 from .models import *
 import babel.numbers
@@ -20,7 +19,7 @@ class SiswaInLineKeuangan(admin.TabularInline):
     readonly_fields = fields
 
 class KeuanganAdmin(admin.ModelAdmin):
-    list_display =  ('status_keuangan',)
+    list_display =  ('status_keuangan','siswa_count')
     inlines = [SiswaInLineKeuangan]
 
 class SiswaInLineGuru(admin.TabularInline):
@@ -35,9 +34,8 @@ class GuruAdmin(admin.ModelAdmin):
     inlines = [SiswaInLineJadwal]
 
 class SiswaPDBAdmin(admin.ModelAdmin):
-    list_display = ('nama_lengkap', 'nama_panggilan', 'nama_wali', 'kontak', 'alamat', 'jadwal_mengaji',)
-    search_fields = ('nama_lengkap', 'nama_panggilan', 'nama_wali', 'kontak', 'alamat',)
-
+    list_display = ('siswa_count','nama_lengkap', 'nama_panggilan', 'nama_wali', 'kontak', 'alamat', 'jadwal_mengaji')
+    search_fields = ('nama_lengkap', 'nama_panggilan', 'nama_wali', 'kontak', 'alamat', 'jadwal_mengaji__jadwal',)
 
 class SiswaAdmin(admin.ModelAdmin):
     list_display = ('nama_lengkap', 'nama_panggilan', 'nama_wali', 'kontak',

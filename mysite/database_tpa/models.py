@@ -12,6 +12,8 @@ class Jadwal(models.Model):
     def siswa_count(self):
         return self.siswa_set.count()
 
+    siswa_count.short_description = 'Jumlah Siswa'
+
 class Keuangan(models.Model):
     status_keuangan = models.CharField(max_length=30, blank=True, null=True)
 
@@ -23,6 +25,8 @@ class Keuangan(models.Model):
 
     def siswa_count(self):
         return self.siswa_set.count()
+
+    siswa_count.short_description = 'Jumlah Siswa'
 
 class Guru(models.Model):
     nama_guru = models.CharField(max_length=30, blank=True, null=True)
@@ -36,6 +40,8 @@ class Guru(models.Model):
 
     def siswa_count(self):
         return self.siswa_set.count()
+
+    siswa_count.short_description = 'Jumlah Siswa'
 
 class SiswaPDB(models.Model):
     CHOICES = (
@@ -53,6 +59,13 @@ class SiswaPDB(models.Model):
 
     def __str__(self):
         return self.nama_lengkap
+
+    def siswa_count(self):
+        return "Sudah Terdaftar" if self.siswa_set.exists() else "Belum Terdaftar"
+
+    siswa_count.short_description = 'Status Pendaftaran'
+
+
 
     class Meta:
         verbose_name_plural = 'Siswa PDB'
