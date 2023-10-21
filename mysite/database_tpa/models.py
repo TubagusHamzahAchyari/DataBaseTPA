@@ -139,7 +139,7 @@ def sync_siswa_pdb(sender, instance, **kwargs):
         instance.alamat = instance.siswa_pdb.alamat
         instance.jadwal_mengaji = instance.siswa_pdb.jadwal_mengaji
         instance.jenis_kelamin = instance.siswa_pdb.jenis_kelamin
-        # instance.siswa_pdb.save()
+        instance.siswa_pdb.save()
 
 pre_save.connect(sync_siswa_pdb, sender=Siswa)
 
