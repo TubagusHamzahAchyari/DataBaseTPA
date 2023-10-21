@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models import Q
+
 
 class Jadwal(models.Model):
     jadwal = models.CharField(max_length=30, blank=True, null=True)
@@ -48,6 +50,11 @@ class SiswaPDB(models.Model):
         ('Laki-laki', 'Laki-laki'),
         ('Perempuan', 'Perempuan'),
     )
+    STATUS_CHOICES = (
+        ('Sudah Terdaftar', 'Sudah Terdaftar'),
+        ('Belum Terdaftar', 'Belum Terdaftar'),
+    )
+
     nama_lengkap = models.CharField(max_length=50, blank=True, null=True)
     nama_panggilan = models.CharField(max_length=20, blank=True, null=True)
     nama_wali = models.CharField(max_length=50, blank=True, null=True)
@@ -55,17 +62,18 @@ class SiswaPDB(models.Model):
     alamat = models.TextField(blank=True, null=True)
     jenis_kelamin = models.CharField(max_length=20, blank=True, null=True, choices=CHOICES)
     jadwal_mengaji = models.ForeignKey(Jadwal, blank=True, null=True, on_delete=models.SET_NULL)
+    status_pendaftaran = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Belum Terdaftar')
 
 
     def __str__(self):
         return self.nama_lengkap
 
-    def siswa_count(self):
-        return "Sudah Terdaftar" if self.siswa_set.exists() else "Belum Terdaftar"
-
-    siswa_count.short_description = 'Status Pendaftaran'
-
-
+    def save(self, *args, **kwargs):
+        if self.siswa_set.exists():
+            self.status_pendaftaran = 'Sudah Terdaftar'
+        else:
+            self.status_pendaftaran = 'Belum Terdaftar'
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = 'Siswa PDB'
@@ -131,6 +139,7 @@ def sync_siswa_pdb(sender, instance, **kwargs):
         instance.alamat = instance.siswa_pdb.alamat
         instance.jadwal_mengaji = instance.siswa_pdb.jadwal_mengaji
         instance.jenis_kelamin = instance.siswa_pdb.jenis_kelamin
+        # instance.siswa_pdb.save()
 
 pre_save.connect(sync_siswa_pdb, sender=Siswa)
 

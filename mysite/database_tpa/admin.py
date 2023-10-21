@@ -1,3 +1,5 @@
+import decimal
+
 from django.contrib import admin
 from .models import *
 import babel.numbers
@@ -34,8 +36,15 @@ class GuruAdmin(admin.ModelAdmin):
     inlines = [SiswaInLineJadwal]
 
 class SiswaPDBAdmin(admin.ModelAdmin):
-    list_display = ('siswa_count','nama_lengkap', 'nama_panggilan', 'nama_wali', 'kontak', 'alamat', 'jadwal_mengaji')
-    search_fields = ('nama_lengkap', 'nama_panggilan', 'nama_wali', 'kontak', 'alamat', 'jadwal_mengaji__jadwal',)
+    list_display = ('status_pendaftaran','nama_lengkap', 'nama_panggilan', 'nama_wali', 'kontak', 'alamat', 'jadwal_mengaji')
+    search_fields = ('status_pendaftaran','nama_lengkap', 'nama_panggilan', 'nama_wali', 'kontak', 'alamat', 'jadwal_mengaji__jadwal')
+    actions = ['save_all_selected']
+
+    def save_all_selected(modeladmin, request, queryset):
+        for obj in queryset:
+            obj.save()
+
+    save_all_selected.short_description = "Update Data"
 
 class SiswaAdmin(admin.ModelAdmin):
     list_display = ('nama_lengkap', 'nama_panggilan', 'nama_wali', 'kontak',
@@ -45,8 +54,16 @@ class SiswaAdmin(admin.ModelAdmin):
     actions = ['save_all_selected','keuangan_satu','keuangan_dua','keuangan_tiga']
 
     def babel_spp(self, obj):
-        return babel.numbers.format_currency(obj.spp, 'IDR', locale='id_ID')
+        if obj.spp is not None:
+            try:
+                return babel.numbers.format_currency(obj.spp, 'IDR', locale='id_ID')
+            except (ValueError, decimal.InvalidOperation):
+                return 'Invalid SPP Value'
+        else:
+            return 'Perlu Update Data'
+
     babel_spp.short_description = 'SPP'
+
     def save_all_selected(modeladmin, request, queryset):
         for obj in queryset:
             obj.save()
