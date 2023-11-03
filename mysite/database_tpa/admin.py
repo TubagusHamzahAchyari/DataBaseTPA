@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import landscape, letter
 from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
 from .models import *
 import babel.numbers
 from babel.numbers import format_currency
@@ -139,13 +139,12 @@ class SiswaAdmin(admin.ModelAdmin):
         # Tabel untuk data siswa
         table_data = [['No', 'Nama', 'Panggilan', 'Nama Wali', 'Kontak', 'Alamat','Guru', 'Jadwal', 'SPP', 'Jenis Kelamin', 'Keuangan', 'Jilid Umi']] \
                      + data
-        col_widths = [20, 80, 70, 70, 70, 70, 70, 70, 50, 70, 70, 50]  # Misalnya, ini adalah lebar kolom untuk setiap kolom
+        col_widths = [20, 80, 70, 70, 70, 60, 70, 70, 70, 70, 70, 50]  # Misalnya, ini adalah lebar kolom untuk setiap kolom
 
         table = Table(table_data, colWidths=col_widths, repeatRows=1)
 
         # Tambahkan parameter wordwrap pada TableStyle
         table.setStyle(TableStyle([
-            ('WORDWRAP', (0, 0), (-1, -1), 1),  # Mengaktifkan pemutaran kata untuk seluruh tabel
             ('BACKGROUND', (0, 0), (-1, 0), colors.white),  # Mengubah warna latar belakang header menjadi putih
             ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),
             ('TOPPADDING', (0, 0), (-1, 0), 2.5),
@@ -164,6 +163,7 @@ class SiswaAdmin(admin.ModelAdmin):
         ]))
 
         elements.append(table)
+        elements.append(Spacer(1, 12))
         # Tambahkan total di bawah tabel
         total_style = getSampleStyleSheet()
         total_style = total_style['Normal']
