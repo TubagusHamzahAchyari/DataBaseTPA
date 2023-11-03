@@ -103,6 +103,10 @@ class SiswaAdmin(admin.ModelAdmin):
     def cetak_pdf(modeladmin, request, queryset):
         response = HttpResponse(content_type='application/pdf')
         response['Content-Disposition'] = 'attachment; filename="siswa.pdf"'
+        def wrap_text_by_words(text, limit=7):
+            words = text.split()
+            return '\n'.join([' '.join(words[i:i + limit]) for i in range(0, len(words), limit)])
+
 
         # Data yang akan dicetak ke PDF
         data = []
@@ -111,9 +115,9 @@ class SiswaAdmin(admin.ModelAdmin):
             data.append([index,
                          obj.nama_lengkap,
                          obj.nama_panggilan,
-                         obj.nama_wali,
-                         obj.kontak,
-                         obj.alamat,
+                         wrap_text_by_words(obj.nama_wali, 1),  # Menggunakan wrap_text_by_words untuk nama_wali
+                         wrap_text_by_words(obj.kontak, 1),  # Menggunakan wrap_text_by_words untuk kontak
+                         wrap_text_by_words(obj.alamat, 1),
                          obj.guru,
                          obj.jadwal_mengaji,
                          format_currency(obj.spp, 'IDR', locale='id_ID'),
@@ -141,6 +145,7 @@ class SiswaAdmin(admin.ModelAdmin):
 
         # Tambahkan parameter wordwrap pada TableStyle
         table.setStyle(TableStyle([
+            ('WORDWRAP', (0, 0), (-1, -1), 1),  # Mengaktifkan pemutaran kata untuk seluruh tabel
             ('BACKGROUND', (0, 0), (-1, 0), colors.white),  # Mengubah warna latar belakang header menjadi putih
             ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),
             ('TOPPADDING', (0, 0), (-1, 0), 2.5),
