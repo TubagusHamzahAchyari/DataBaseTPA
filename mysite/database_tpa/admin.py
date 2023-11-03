@@ -1,6 +1,4 @@
 import decimal
-import textwrap
-from reportlab.lib import colors
 from django.contrib import admin
 from django.http import HttpResponse
 from reportlab.lib import colors
