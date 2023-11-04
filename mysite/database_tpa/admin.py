@@ -44,6 +44,7 @@ class SiswaPDBAdmin(admin.ModelAdmin):
     list_display = ('status_pendaftaran','nama_lengkap', 'nama_panggilan', 'nama_wali', 'kontak', 'alamat', 'jadwal_mengaji')
     search_fields = ('status_pendaftaran','nama_lengkap', 'nama_panggilan', 'nama_wali', 'kontak', 'alamat', 'jadwal_mengaji__jadwal')
     actions = ['save_all_selected']
+    readonly_fields = ('status_pendaftaran',)
 
     def save_all_selected(modeladmin, request, queryset):
         for obj in queryset:
